@@ -1,0 +1,106 @@
+---
+ 
+- hosts: localhost
+  connection: local
+  vars: 
+   nios_details:
+      grid_master:
+        name: "{{ lookup('ini', 'name section=gm file=ansible/infoblox_details.ini') }}"
+        lan1_ip: "{{ lookup('ini', 'ip_address section=gm file=ansible/infoblox_details.ini') }}"
+        lan1_netmask: "{{ lookup('ini', 'netmask section=gm file=ansible/infoblox_details.ini') }}"
+        lan1_gw: "{{ lookup('ini', 'gateway section=gm file=ansible/infoblox_details.ini') }}"
+      membera:
+        name: "{{ lookup('ini', 'name section=memberA file=ansible/infoblox_details.ini') }}"
+        lan1_ip: "{{ lookup('ini', 'lan1_ip_address section=memberA file=ansible/infoblox_details.ini') }}"
+        lan1_netmask: "{{ lookup('ini', 'lan1_netmask section=memberA file=ansible/infoblox_details.ini') }}"
+        lan1_gw: "{{ lookup('ini', 'lan1_gateway section=memberA file=ansible/infoblox_details.ini') }}"
+        mgmt_ip: "{{ lookup('ini', 'mgmt_ip_address section=memberA file=ansible/infoblox_details.ini') }}"
+        mgmt_netmask: "{{ lookup('ini', 'mgmt_netmask section=memberA file=ansible/infoblox_details.ini') }}"
+        mgmt_gw: "{{ lookup('ini', 'mgmt_gateway section=memberA file=ansible/infoblox_details.ini') }}"
+      memberb:
+        name: "{{ lookup('ini', 'name section=memberB file=ansible/infoblox_details.ini') }}"
+        lan1_ip: "{{ lookup('ini', 'lan1_ip_address section=memberB file=ansible/infoblox_details.ini') }}"
+        lan1_netmask: "{{ lookup('ini', 'lan1_netmask section=memberB file=ansible/infoblox_details.ini') }}"
+        lan1_gw: "{{ lookup('ini', 'lan1_gateway section=memberB file=ansible/infoblox_details.ini') }}"
+        mgmt_ip: "{{ lookup('ini', 'mgmt_ip_address section=memberB file=ansible/infoblox_details.ini') }}"
+        mgmt_netmask: "{{ lookup('ini', 'mgmt_netmask section=memberB file=ansible/infoblox_details.ini') }}"
+        mgmt_gw: "{{ lookup('ini', 'mgmt_gateway section=memberB file=ansible/infoblox_details.ini') }}"
+   nios_provider:
+        host: "{{ lookup('ini', 'ip_address section=gm file=ansible/infoblox_details.ini') }}"
+        username: "{{ lookup('ini', 'user_id section=grid_details file=ansible/infoblox_details.ini') }}"
+        password: "{{ lookup('ini', 'password section=grid_details file=ansible/infoblox_details.ini') }}"
+        wapi_version: 2.6 
+  tasks:
+  - name: Power on gridmaster and members
+    local_action: shell robot -T -v LAB:'CML-West Europe-ap01' -N Gridmaster -d ansible/roles/infoblox/reports robot/infoblox_gridmaster.robot 
+    register: infoblox_gridmaster_output
+    
+  - name: Print testresults
+    debug: 
+      var: infoblox_gridmaster_output.stdout_lines
+    failed_when: "'FAIL' in infoblox_gridmaster_output.stdout"
+    
+  - name: Wait for gridmaster to come online
+    command: curl --head --insecure "https://{{ lookup('ini', 'ip_address section=gm file=ansible/infoblox_details.ini') }}"
+    register: result
+    until: result.stdout.find("302 Found")!= -1
+    retries: 50
+    delay: 10
+    changed_when: false
+
+  - name: Wait for httpd service to be active
+    pause:
+     seconds: 20
+
+  - name: Pre-provision members in gridmaster
+    nios_member:
+      host_name: "{{item.value.name}}"
+      vip_setting:
+       - address: "{{item.value.lan1_ip}}"
+         subnet_mask: "{{item.value.lan1_netmask}}"
+         gateway: "{{item.value.lan1_gw}}"
+      config_addr_type: IPV4
+      platform: VNIOS
+      comment: "Created by Ansible"
+      state: present
+      provider: "{{ nios_provider }}"
+    with_dict: "{{nios_details}}"
+    when: "'grid_master' not in  item.key"
+    
+  - name: Wait for vnios members to come online
+    pause:
+      seconds: 15
+
+  - name: Add vnios members to the grid 
+    uri:
+      url: "https://{{item.value.lan1_ip}}/wapi/v2.6/grid?_function=join&_return_as_object=1"
+      method: POST
+      user: "{{ lookup('ini', 'user_id section=grid_details file=nios_details.ini') }}"
+      password: "{{ lookup('ini', 'password section=grid_details file=nios_details.ini') }}"
+      status_code: 201,302,200
+      method: POST
+      header:
+         Content-Type: "application/json"
+      body:
+        grid_name: "{{ lookup('ini', 'grid_name section=grid_details file=nios_details.ini') }}"
+        shared_secret: "{{ lookup('ini', 'shared_secret section=grid_details file=nios_details.ini') }}"
+        master: "{{ lookup('ini', 'ip_address section=gm file=nios_details.ini') }}" 
+      body_format: json
+      validate_certs: no
+      return_content: yes
+    with_dict: "{{nios_details}}"
+    when : "'grid_master' not in item.key"
+
+...  
+
+
+
+
+
+
+
+
+
+
+
+
