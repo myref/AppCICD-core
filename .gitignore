@@ -1,0 +1,55 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+modules/azure/environment_azure/.access^
+modules/azure/pod_azure/configs/.access^
+modules/azure/server_azure/.access^
+modules/azure/tenant_azure/configs/.access^
+modules/cml/compartment_cml/.access^
+modules/cml/compartment_cml/configs/.access^
+modules/cml/pod_cml/.access^
+modules/cml/pod_cml/configs/.access^
+modules/cml/server_cml/.access^
+modules/cml/tenant_cml/.access^
+modules/cml/tenant_cml/configs/.access^
+modules/services/applications/.access^
+modules/services/environments/.access^
+modules/services/pods/.access^
+providers/registry.terraform.io/ciscodevnet/cml2/.access^
+providers/registry.terraform.io/hashicorp/azurerm/.access^
+providers/registry.terraform.io/nbering/ansible/.access^
+.access^
+modules/azure/compartment_azure/.access^
+modules/azure/conduit_azure/.access^
+modules/azure/pod_azure/.access^
+modules/azure/tenant_azure/.access^
+modules/services/compartments/.access^
+modules/services/conduits/.access^
+modules/services/servers/.access^
+modules/services/tenants/.access^
+modules/cml/pod_cml/setup/report.html
+modules/cml/pod_cml/setup/output.xml
+modules/cml/pod_cml/setup/log.html
+report.html
+output.xml
+log.html
+interactive_console_output.xml
+modules/cml/pod_cml/setup/ansible/roles/infoblox/reports/

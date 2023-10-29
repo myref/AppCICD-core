@@ -76,6 +76,7 @@ packages:
   - docker.io
   - curl
   - gpg
+  - direnv
 
 ntp: 
   enabled: true
@@ -94,20 +95,31 @@ runcmd:
   - echo "routes installed" >>/home/ubuntu/install-log.txt
   - ip r  >>/home/ubuntu/install-log.txt
   - ssh-keygen -t rsa -N "" -f /home/ubuntu/.ssh/id_rsa -C netcicd-pipeline@infraautomator.provider.test  >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install cisco.ios -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install cisco.iosxr -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install cisco.nxos -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install ansible.posix -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install netapp.ontap -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - ansible-galaxy collection install infoblox.nios_modules -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
-  - chown -R ubuntu:ubuntu /home/ubuntu/.ansible >>/home/ubuntu/install-log.txt
 #  - git clone https://github.com/DevoteamNL/aqua-build-image.git /home/ubuntu/aqua  >>/home/ubuntu/install-log.txt
 #  - pip install --upgrade -r /home/ubuntu/aqua/requirements.txt
   - pip install --upgrade paramiko ncclient cffi cmlutils >>/home/ubuntu/install-log.txt
   - pip install --upgrade ansible >>/home/ubuntu/install-log.txt
+  - pip install --upgrade ansible-lint >>/home/ubuntu/install-log.txt
+  - pip install --upgrade ansible-vault >>/home/ubuntu/install-log.txt
   - pip install --upgrade pyats[full] >>/home/ubuntu/install-log.txt
   - pip install --upgrade robotframework-seleniumlibrary >>/home/ubuntu/install-log.txt
   - pip install --upgrade robotframework-sshlibrary >>/home/ubuntu/install-log.txt
+  - pip install --upgrade robotframework-requests >>/home/ubuntu/install-log.txt
+  - pip install --upgrade robotframework-winrmlibrary >>/home/ubuntu/install-log.txt
+  - pip install --upgrade robotframework-robocop >>/home/ubuntu/install-log.txt
+  - pip install --upgrade pywinrm >>/home/ubuntu/install-log.txt
+  - pip install --upgrade requests >>/home/ubuntu/install-log.txt
+  - pip install --upgrade RESTinstance >>/home/ubuntu/install-log.txt
+  - pip install --upgrade ruff >>/home/ubuntu/install-log.txt
+  - pip install --upgrade netapp-lib >>/home/ubuntu/install-log.txt
+  - pip install --upgrade infoblox-client >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install cisco.ios -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install cisco.iosxr -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install cisco.nxos -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install ansible.posix -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install netapp.ontap -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - /usr/local/bin/ansible-galaxy collection install infoblox.nios_modules -p /home/ubuntu/.ansible/collections/ >>/home/ubuntu/install-log.txt
+  - chown -R ubuntu:ubuntu /home/ubuntu/.ansible >>/home/ubuntu/install-log.txt
   - groupadd docker >>/home/ubuntu/install-log.txt
   - usermod -aG docker ubuntu >>/home/ubuntu/install-log.txt
   - chown ubuntu:ubuntu -R /home/ubuntu >>/home/ubuntu/install-log.txt
@@ -116,7 +128,6 @@ runcmd:
   - echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list >>/home/ubuntu/install-log.txt
   - apt update
   - apt install terraform
-#  - rm -rf /var/lib/cloud/instances
   - docker run -d --name seleniumffhost selenium/standalone-firefox
   - docker run -d --name seleniumgchost selenium/standalone-chrome
 
