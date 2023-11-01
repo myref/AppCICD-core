@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation          This robotfile executes the commands on a vnios node to configure it as a gridmaster
 ...                    usage:
-...                    robot -v lab:'CML-West Europe-ap01' infoblox_gridmaster.robot 
+...                    robot -v lab:'Infoblox_configurator' infoblox_gridmaster.robot 
 
 Library                SSHLibrary
 
@@ -15,10 +15,10 @@ ${PASSWORD}            %{TF_VAR_cml_password}
 ${ib_node}             Gridmaster
 ${ib_user}             %{ib_user}
 ${ib_pwd}              %{ib_pwd}
-${ib_lan1_addr}        192.168.205.50
-${ib_lan1_mask}        255.255.255.248
-${ib_lan1_gw}          192.168.205.49
-${ib_gm_vip}           192.168.205.50
+${ib_lan1_addr}        192.168.32.50
+${ib_lan1_mask}        255.255.255.0
+${ib_lan1_gw}          192.168.32.2
+${ib_gm_vip}           192.168.32.49
 ${ib_gm_grid}          %{ib_grid}
 ${ib_gm_secret}        %{ib_grid_secret}
 
