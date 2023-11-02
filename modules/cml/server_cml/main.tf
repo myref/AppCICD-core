@@ -9,6 +9,14 @@ resource "cml2_node" "server" {
   nodedefinition   = "ubuntu"
 }
 
+resource "ansible_host" "custAcme" {
+    inventory_hostname = "${var.name}"
+    groups = ["acme"]
+    vars = {
+        ansible_host = "192.168.${var.c + 5}.${var.y + 2}"
+    }
+}
+
 resource "cml2_link" "compartment-server" {
   lab_id           = var.pod
   node_a           = var.compartment

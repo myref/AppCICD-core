@@ -4,6 +4,14 @@ resource "cml2_lab" "AppPoDSim" {
   notes       = "${var.description}"
 }
 
+resource "ansible_group" "deployment" {
+  inventory_group_name = "${var.prov}-${var.region}-${var.name}"
+  children = ["podinfra", "services", "data", "sysbeheer", "backend", "acme"]
+    vars = {
+      deployment_id = cml2_lab.AppPoDSim.id
+  }
+}
+
 resource "cml2_lifecycle" "App-PoD" {
   lab_id = cml2_lab.AppPoDSim.id
   elements = [
@@ -62,7 +70,7 @@ resource "cml2_lifecycle" "App-PoD" {
     cml2_link.oob-comData.id,
     cml2_node.comDataJumpVlan.id,
     cml2_link.comData-comDataJumpVlan.id,
-    cml2_node.DataJump.id,
+    cml2_node.dataJump.id,
     cml2_link.comDataJumpVlan-DataJump.id,
 
     cml2_node.backend.id,
@@ -88,7 +96,7 @@ resource "cml2_lifecycle" "App-PoD" {
     "com-sysbeheer":     file("modules/cml/pod_cml/configs/comSysbeheer.cfg")
     "sysbeheer jump":    file("modules/cml/pod_cml/configs/sysbeheerJump.cfg")
     "com-data":          file("modules/cml/pod_cml/configs/comData.cfg")
-    "data jump":         file("modules/cml/pod_cml/configs/dataJump.cfg")
+    "dataJump":          file("modules/cml/pod_cml/configs/dataJump.cfg")
     "backend":           file("modules/cml/pod_cml/configs/backend.cfg")
     "backend jump":      file("modules/cml/pod_cml/configs/backendJump.cfg")
     "backend desktop":   file("modules/cml/pod_cml/configs/backendDesktop.cfg")

@@ -7,6 +7,15 @@ resource "cml2_node" "comSysbeheer" {
   nodedefinition = "csr1000v"
 }
 
+resource "ansible_host" "comSysbeheer" {
+    inventory_hostname = "comSysbeheer"
+    groups = ["sysbeheer"]
+    vars = {
+        ansible_host = "192.168.203.133"
+        lo0          = "192.168.254.133"
+    }
+}
+
 resource "cml2_link" "fabric-comSysbeheer" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.fabric.id
@@ -48,6 +57,15 @@ resource "cml2_node" "sysbeheerJump" {
   tags           = ["sysbeheer"]
   nodedefinition = "ubuntu"
   imagedefinition = "jumphost"
+}
+
+resource "ansible_host" "sysbeheerJump" {
+    inventory_hostname = "sysbeheerJump"
+    groups = ["sysbeheer"]
+    vars = {
+        ansible_host = "192.168.203.250"
+        ansible_user = "ubuntu"
+    }
 }
 
 resource "cml2_link" "comSysbeheerJumpVlan-SysbeheerJump" {

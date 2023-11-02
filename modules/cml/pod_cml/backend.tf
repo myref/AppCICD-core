@@ -1,3 +1,8 @@
+resource "ansible_group" "backend" {
+  inventory_group_name = "backend"
+  children = ["backend", "backendJump", "backendDesktop"]
+}
+
 resource "cml2_node" "backend" {
   lab_id         = cml2_lab.AppPoDSim.id
   label          = "backend"
@@ -5,6 +10,15 @@ resource "cml2_node" "backend" {
   y              = 920
   tags           = ["backend"]
   nodedefinition = "csr1000v"
+}
+
+resource "ansible_host" "backend" {
+    inventory_hostname = "backend"
+    groups = ["backend"]
+    vars = {
+        ansible_host = "192.168.202.157"
+        lo0          = "192.168.254.157"
+    }
 }
 
 resource "cml2_link" "fabric-backend" {
@@ -50,6 +64,15 @@ resource "cml2_node" "BackendJump" {
   imagedefinition = "jumphost"
 }
 
+resource "ansible_host" "backendJump" {
+    inventory_hostname = "backendJump"
+    groups = ["backend"]
+    vars = {
+        ansible_host = "192.168.210.250"
+        ansible_user = "ubuntu"
+    }
+}
+
 resource "cml2_link" "backendJumpVlan-BackendJump" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.backendJumpVlan.id
@@ -65,6 +88,15 @@ resource "cml2_node" "BackendDesktop" {
   y              = 820
   tags           = ["backend"]
   nodedefinition = "desktop"
+}
+
+resource "ansible_host" "backendDesktop" {
+    inventory_hostname = "backendDesktop"
+    groups = ["backend"]
+    vars = {
+        ansible_host = "192.168.210.251"
+        ansible_user = "ubuntu"
+    }
 }
 
 resource "cml2_link" "backendJumpVlan-BackendDesktop" {

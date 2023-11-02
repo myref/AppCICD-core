@@ -21,14 +21,7 @@ resource "cml2_lifecycle" "Compartment" {
     cml2_node.compartment.id,
     cml2_link.cust_tenant-compartment.id
   ]
-  configs = {
-    "${var.vrf}":    templatefile("modules/cml/compartment_cml/configs/compartment_interface.cfg", {
-       interface      = var.y + 5
-       description    = var.description
-       vrf            = var.ctype
-       subnet         = var.y + 1
-       })
-  }
+
   staging = {
     stages          = ["compartment"]
     start_remaining = false

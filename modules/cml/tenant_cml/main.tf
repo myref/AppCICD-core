@@ -34,6 +34,15 @@ resource "cml2_node" "cust_tenant" {
   nodedefinition   = "csr1000v"
 }
 
+resource "ansible_host" "custAcme" {
+    inventory_hostname = "custAcme"
+    groups = ["acme"]
+    vars = {
+        ansible_host = "192.168.202.150"
+        lo0          = "192.168.254.150"
+    }
+}
+
 resource "cml2_link" "cust_fw-cust_tenant" {
   lab_id           = var.pod
   node_a           = cml2_node.cust_fw.id
@@ -81,6 +90,15 @@ resource "cml2_node" "tenantJump" {
   tags             = ["customer"]
   nodedefinition = "ubuntu"
   imagedefinition = "jumphost"
+}
+
+resource "ansible_host" "custJump" {
+    inventory_hostname = "custJump"
+    groups = ["acme"]
+    vars = {
+        ansible_host = "192.168.128.250"
+        ansible_user = "ubuntu"
+    }
 }
 
 resource "cml2_link" "tenantJumpVlan-tenantJump" {

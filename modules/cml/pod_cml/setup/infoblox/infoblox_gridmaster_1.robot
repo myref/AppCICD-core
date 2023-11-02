@@ -42,52 +42,52 @@ Grid Setup
 
 *** Variables ***
 
-${BROWSER1}                                firefox
-${DELAY}                                   0
-${HOST}                                    %{TF_VAR_cml_host}
-${USERNAME}                                %{TF_VAR_cml_username}
-${PASSWORD}                                %{TF_VAR_cml_password}
-${ib_node}                                 Gridmaster
-${ib_user}                                 %{ib_user}
-${ib_pwd}                                  %{ib_pwd}
-${ib_lan1_addr}                            192.168.32.50
-${ib_lan1_mask}                            255.255.255.0
-${ib_lan1_gw}                              192.168.32.49
-${ib_gm_vip}                               192.168.32.50
-${ib_gm_grid}                              %{ib_grid}
-${ib_gm_secret}                            %{ib_grid_secret}
-${ib_host_name}                            %{ib_host_name}
-
-*** Keywords ***
-Present credentials
-    Sleep                                  10s
-    Wait Until Page Contains               Grid Manager
-    Input Text                             username                               ${ib_user}
-    Input Text                             password                               ${ib_pwd}
-    Click Button                           Login
-
-Accept EULA
-    Wait Until Element Is Visible          agreeButton                            timeout=5 min
-    Click Button                           agreeButton
-
-Data Collection Opt-out
-    Wait Until Element Is Visible          agreeButton                            timeout=5 min
-    Click Button                           OK
-
-Wait for Grid Setup popup
-    Wait Until Page Contains               Grid Setup Wizard                       timeout=5 min
-    Wait Until Page Contains Element       name=view:welcomeStep:welcomeOption
-    Click Element                          name=view:welcomeStep:welcomeOption
-    Wait Until Page Contains Element       name=buttons:next
-    Click Element                          name=buttons:next
-
-Configure Grid    
-    Wait Until Page Contains               Grid Name
-    Input Text                             name=view:gridMasterStep:gridName               ${ib_gm_grid}
-    Input Text                             name=view:gridMasterStep:pwdsharedSecret        ${ib_gm_secret}
-    Input Text                             name=view:gridMasterStep:cnfSharedSecret        ${ib_gm_secret}
-    Input Text                             name=view:gridMasterStep:hostName               ${ib_host_name}
-    Click Element                          name=buttons:next
+${BROWSER1}                                            firefox
+${DELAY}                                               0
+${HOST}                                                %{TF_VAR_cml_host}
+${USERNAME}                                            %{TF_VAR_cml_username}
+${PASSWORD}                                            %{TF_VAR_cml_password}
+${ib_node}                                             Gridmaster
+${ib_user}                                             %{ib_user}
+${ib_pwd}                                              %{ib_pwd}
+${ib_lan1_addr}                                        192.168.32.50
+${ib_lan1_mask}                                        255.255.255.0
+${ib_lan1_gw}                                          192.168.32.49
+${ib_gm_vip}                                           192.168.32.50
+${ib_gm_grid}                                          %{ib_grid}
+${ib_gm_secret}                                        %{ib_grid_secret}
+${ib_host_name}                                        %{ib_host_name}
+            
+*** Keywords ***            
+Present credentials            
+    Sleep                                              10s
+    Wait Until Page Contains                           Grid Manager
+    Input Text                                         username                               ${ib_user}
+    Input Text                                         password                               ${ib_pwd}
+    Click Button                                       Login
+            
+Accept EULA            
+    Wait Until Element Is Visible                      agreeButton                            timeout=5 min
+    Click Button                                       agreeButton
+            
+Data Collection Opt-out            
+    Wait Until Element Is Visible                      agreeButton                            timeout=5 min
+    Click Button                                       OK
+            
+Wait for Grid Setup popup            
+    Wait Until Page Contains                           Grid Setup Wizard                       timeout=5 min
+    Wait Until Page Contains Element                   name=view:welcomeStep:welcomeOption
+    Click Element                                      name=view:welcomeStep:welcomeOption
+    Wait Until Page Contains Element                   name=buttons:next
+    Click Element                                      name=buttons:next
+            
+Configure Grid                
+    Wait Until Page Contains                           Grid Name
+    Input Text                                         name=view:gridMasterStep:gridName               ${ib_gm_grid}
+    Input Text                                         name=view:gridMasterStep:pwdsharedSecret        ${ib_gm_secret}
+    Input Text                                         name=view:gridMasterStep:cnfSharedSecret        ${ib_gm_secret}
+    Input Text                                         name=view:gridMasterStep:hostName               ${ib_host_name}
+    Click Element                                      name=buttons:next
 
 Configure Ports and Addresses
     Wait Until Page Contains               Ports and Addresses

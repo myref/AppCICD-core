@@ -7,6 +7,15 @@ resource "cml2_node" "comData" {
   nodedefinition = "csr1000v"
 }
 
+resource "ansible_host" "comData" {
+    inventory_hostname = "comData"
+    groups = ["data"]
+    vars = {
+        ansible_host = "192.168.202.135"
+        lo0          = "192.168.254.135"
+    }
+}
+
 resource "cml2_link" "fabric-comData" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.fabric.id
@@ -40,9 +49,9 @@ resource "cml2_link" "comData-comDataJumpVlan" {
   slot_b         = 3
 } 
 
-resource "cml2_node" "DataJump" {
+resource "cml2_node" "dataJump" {
   lab_id         = cml2_lab.AppPoDSim.id
-  label          = "data jump"
+  label          = "dataJump"
   x              = 1000
   y              = 640
   tags           = ["data"]
@@ -50,10 +59,19 @@ resource "cml2_node" "DataJump" {
   imagedefinition = "jumphost"
 }
 
+resource "ansible_host" "dataJump" {
+    inventory_hostname = "dataJump"
+    groups = ["data"]
+    vars = {
+        ansible_host = "192.168.202.250"
+        ansible_user = "ubuntu"
+    }
+}
+
 resource "cml2_link" "comDataJumpVlan-DataJump" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.comDataJumpVlan.id
   slot_a         = 1
-  node_b         = cml2_node.DataJump.id
+  node_b         = cml2_node.dataJump.id
   slot_b         = 0
 } 

@@ -7,6 +7,15 @@ resource "cml2_node" "comServices" {
   nodedefinition   = "csr1000v"
 }  
 
+resource "ansible_host" "comServices" {
+    inventory_hostname = "comServices"
+    groups = ["services"]
+    vars = {
+        ansible_host = "192.168.202.131"
+        lo0          = "192.168.254.131"
+    }
+}
+
 resource "cml2_link" "fabric-comServices" {
   lab_id           = cml2_lab.AppPoDSim.id
   node_a           = cml2_node.fabric.id
@@ -50,6 +59,15 @@ resource "cml2_node" "servicesJump" {
   imagedefinition = "jumphost"
 }
 
+resource "ansible_host" "servicesJump" {
+    inventory_hostname = "servicesJump"
+    groups = ["services"]
+    vars = {
+        ansible_host = "192.168.201.250"
+        ansible_user = "ubuntu"
+    }
+}
+
 resource "cml2_link" "comServicesJumpVlan-servicesJump" {
   lab_id           = cml2_lab.AppPoDSim.id
   node_a           = cml2_node.comServicesJumpVlan.id
@@ -82,7 +100,7 @@ resource "cml2_node" "servicesBr" {
   y                = -250
   tags             = ["services"]
   nodedefinition   = "external_connector"
-  configuration    = "NAT"
+  configuration    = "System Bridge"
 }
 
 resource "cml2_link" "servicesGw-nat" {

@@ -1,26 +1,26 @@
 *** Settings ***
-Documentation          This robotfile executes the commands on a vnios node to configure it as a gridmaster
-...                    usage:
-...                    robot -v lab:'Infoblox_configurator' infoblox_gridmaster.robot 
-
-Library                SSHLibrary
-
-Suite Setup            Open Connection And Log In
-Suite Teardown         Close All Connections
+Documentation                                  This robotfile executes the commands on a vnios node to configure it as a gridmaster
+...                                            usage:
+...                                            robot -v lab:'Infoblox_configurator' infoblox_gridmaster.robot 
+                        
+Library                                        SSHLibrary
+                        
+Suite Setup                                    Open Connection And Log In
+Suite Teardown                                 Close All Connections
 
 *** Variables ***
-${HOST}                %{TF_VAR_cml_host}
-${USERNAME}            %{TF_VAR_cml_username}
-${PASSWORD}            %{TF_VAR_cml_password}
-${ib_node}             Gridmaster
-${ib_user}             %{ib_user}
-${ib_pwd}              %{ib_pwd}
-${ib_lan1_addr}        192.168.32.50
-${ib_lan1_mask}        255.255.255.0
-${ib_lan1_gw}          192.168.32.2
-${ib_gm_vip}           192.168.32.49
-${ib_gm_grid}          %{ib_grid}
-${ib_gm_secret}        %{ib_grid_secret}
+${HOST}                                        %{TF_VAR_cml_host}
+${USERNAME}                                    %{TF_VAR_cml_username}
+${PASSWORD}                                    %{TF_VAR_cml_password}
+${ib_node}                                     Gridmaster
+${ib_user}                                     %{ib_user}
+${ib_pwd}                                      %{ib_pwd}
+${ib_lan1_addr}                                192.168.32.50
+${ib_lan1_mask}                                255.255.255.0
+${ib_lan1_gw}                                  192.168.32.2
+${ib_gm_vip}                                   192.168.32.49
+${ib_gm_grid}                                  %{ib_grid}
+${ib_gm_secret}                                %{ib_grid_secret}
 
 *** Test Cases ***
 Set interfaces

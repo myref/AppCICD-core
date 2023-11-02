@@ -7,6 +7,16 @@ resource "cml2_node" "gridmaster" {
   nodedefinition   = "Infoblox"
 }
 
+resource "ansible_host" "Gridmaster" {
+    inventory_hostname = "gridmaster"
+    groups = ["backend"]
+    vars = {
+        ansible_host = "192.168.205.50"
+        ansible_user = "admin"
+        ansible_password = "infoblox"
+    }
+}
+
 resource "cml2_link" "backendServicesVlan-gridmaster" {
   lab_id           = cml2_lab.AppPoDSim.id
   node_a           = cml2_node.backendServicesVlan.id
@@ -22,6 +32,19 @@ resource "cml2_node" "infoblox_member_a" {
   y                = 280
   tags             = ["infoblox"]
   nodedefinition   = "Infoblox"
+}
+
+resource "ansible_host" "GridmemberA" {
+    inventory_hostname = "gridmembera"
+    groups = ["services"]
+    vars = {
+        ansible_host = "192.168.205.66"
+        ansible_user = "admin"
+        ansible_password = "infoblox"
+        mgmt = "192.168.205.66"
+        lan1 = "192.168.201.146"
+        lan2 = "192.168.205.137"
+    }
 }
 
 resource "cml2_link" "infoblox_member_a-MGMT" {
@@ -89,6 +112,19 @@ resource "cml2_node" "infoblox_member_b" {
   y                = 360
   tags             = ["infoblox"]
   nodedefinition   = "Infoblox"
+}
+
+resource "ansible_host" "GridmemberB" {
+    inventory_hostname = "gridmemberb"
+    groups = ["services"]
+    vars = {
+        ansible_host = "192.168.205.67"
+        ansible_user = "admin"
+        ansible_password = "infoblox"
+        mgmt = "192.168.205.67"
+        lan1 = "192.168.201.147"
+        lan2 = "10.18.205.138"
+    }
 }
 
 resource "cml2_link" "infoblox_member_b-MGMT" {
