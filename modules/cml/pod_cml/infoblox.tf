@@ -117,7 +117,7 @@ resource "ansible_host" "GridmemberB" {
         ansible_host = "192.168.205.67"
         mgmt = "192.168.205.67"
         lan1 = "192.168.201.147"
-        lan2 = "10.18.205.138"
+        lan2 = "192.168.205.138"
     }
 }
 
