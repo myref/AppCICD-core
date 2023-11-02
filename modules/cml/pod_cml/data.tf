@@ -63,8 +63,7 @@ resource "ansible_host" "dataJump" {
     inventory_hostname = "dataJump"
     groups = ["data"]
     vars = {
-        ansible_host = "192.168.202.250"
-        ansible_user = "ubuntu"
+        ansible_host = "192.168.205.250"
     }
 }
 

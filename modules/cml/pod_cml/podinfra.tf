@@ -64,7 +64,6 @@ resource "ansible_host" "podinfraJump" {
     groups = ["podinfra"]
     vars = {
         ansible_host = "192.168.202.250"
-        ansible_user = "ubuntu"
     }
 }
 

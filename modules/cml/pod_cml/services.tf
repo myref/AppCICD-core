@@ -64,7 +64,6 @@ resource "ansible_host" "servicesJump" {
     groups = ["services"]
     vars = {
         ansible_host = "192.168.201.250"
-        ansible_user = "ubuntu"
     }
 }
 

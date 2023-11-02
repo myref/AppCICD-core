@@ -69,7 +69,6 @@ resource "ansible_host" "backendJump" {
     groups = ["backend"]
     vars = {
         ansible_host = "192.168.210.250"
-        ansible_user = "ubuntu"
     }
 }
 
@@ -95,7 +94,6 @@ resource "ansible_host" "backendDesktop" {
     groups = ["backend"]
     vars = {
         ansible_host = "192.168.210.251"
-        ansible_user = "ubuntu"
     }
 }
 

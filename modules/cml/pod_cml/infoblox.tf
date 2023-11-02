@@ -12,8 +12,6 @@ resource "ansible_host" "Gridmaster" {
     groups = ["backend"]
     vars = {
         ansible_host = "192.168.205.50"
-        ansible_user = "admin"
-        ansible_password = "infoblox"
     }
 }
 
@@ -39,8 +37,6 @@ resource "ansible_host" "GridmemberA" {
     groups = ["services"]
     vars = {
         ansible_host = "192.168.205.66"
-        ansible_user = "admin"
-        ansible_password = "infoblox"
         mgmt = "192.168.205.66"
         lan1 = "192.168.201.146"
         lan2 = "192.168.205.137"
@@ -119,8 +115,6 @@ resource "ansible_host" "GridmemberB" {
     groups = ["services"]
     vars = {
         ansible_host = "192.168.205.67"
-        ansible_user = "admin"
-        ansible_password = "infoblox"
         mgmt = "192.168.205.67"
         lan1 = "192.168.201.147"
         lan2 = "10.18.205.138"
