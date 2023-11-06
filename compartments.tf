@@ -30,12 +30,12 @@ module "compartments" {
     source               = "./modules/services/compartments"
     prov                 = var.deployment.cloudprovider
     pod                  = module.pods.pod_id
-    tenant               = var.tenant
+    tenant               = replace(replace(var.tenant," ",""),"-","_")
     tenant_id            = module.tenants.tenant_id
     vrf                  = module.tenants.tenant_vrf
     vnet                 = module.tenants.tenant_vnet
     compartments         = var.compartments
-    application          = var.application
+    application          = replace(replace(var.application," ",""),"-","_")
     region               = var.deployment.region
     servers              = var.servers
     cml_url              = var.cml_url
@@ -44,7 +44,7 @@ module "compartments" {
 
     for_each             = var.compartments
     key                  = each.key
-    name                 = each.value.name
+    name                 = replace(replace(each.value.name," ",""),"-","_")
     description          = each.value.details.Description
     cversion             = "0.0.1"
     cstatus              = "Operational"

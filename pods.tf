@@ -4,9 +4,9 @@ module "pods" {
     region               = var.deployment.region
     podType              = "AP"
     az                   = var.deployment.availability_zone
-    tenant               = var.tenant
-    application          = var.application
-    environment          = var.name
+    tenant               = replace(replace(var.tenant," ",""),"-","_")
+    application          = replace(replace(var.application," ",""),"-","_")
+    environment          = replace(replace(var.name," ",""),"-","_")
     centercode           = var.deployment.centercode
     read                 = var.deployment.read
     write                = var.deployment.write

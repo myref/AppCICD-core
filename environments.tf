@@ -15,15 +15,15 @@ variable "deployment" {
 module "environments" {
     source               = "./modules/services/environments"
     prov                 = var.deployment.cloudprovider
-    name                 = var.name
+    name                 = replace(replace(var.name," ",""),"-","_")
     description          = "Tenant: ${var.tenant}\nApplication: ${var.application}\nEnvironment: ${var.deployment.cloudprovider}-${var.deployment.region}-${var.deployment.availability_zone}-${var.deployment.type}"
     etype                = var.deployment.type
     compartments         = var.compartments
-    cloudprovider        = var.deployment.cloudprovider
+    cloudprovider        = replace(replace(var.deployment.cloudprovider," ",""),"-","_")
     region               = var.deployment.region
     az                   = var.deployment.availability_zone
-    application          = "1"
-    children             = [1,2,3,4,5]
+    application          = replace(replace(var.application," ",""),"-","_")
+    children             = []
     eversion             = var.deployment.version
     estatus              = "Operational"
     centercode           = var.deployment.centercode

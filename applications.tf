@@ -5,12 +5,12 @@ variable "application" {
 module "applications" {
     source               = "./modules/services/applications"
     prov                 = var.deployment.cloudprovider
-    name                 = var.tenant
+    name                 = replace(replace(var.tenant," ",""),"-","_")
     description          = var.networktenant
     tenant               = module.tenants.tenant_id
     region               = var.deployment.region
     az                   = var.deployment.availability_zone
-    application          = var.application
+    application          = replace(replace(var.application," ",""),"-","_")
     status               = "Operational"
     centercode           = var.deployment.centercode
     read                 = var.deployment.read

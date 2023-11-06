@@ -38,9 +38,9 @@ module "servers" {
     prov                 = var.deployment.cloudprovider
 
     pod                  = module.pods.pod_id
-    tenant               = var.tenant
+    tenant               = replace(replace(var.tenant," ",""),"-","_")
     tenant_id            = module.tenants.tenant_id
-    application          = var.application
+    application          = replace(replace(var.application," ",""),"-","_")
     region               = var.deployment.region
     tenant_subnet        = module.tenants.cust-tenant-systems_subnet
     tenant_subnet_id     = module.tenants.cust-tenant-systems_subnet_id
@@ -50,7 +50,7 @@ module "servers" {
 
     for_each             = var.servers
     key                  = each.key
-    name                 = each.value.name
+    name                 = replace(replace(each.value.name," ",""),"-","_")
     description          = each.value.details.description
     com-svc              = module.pods.service_network
     location             = var.deployment.region
