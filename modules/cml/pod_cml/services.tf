@@ -7,15 +7,6 @@ resource "cml2_node" "comServices" {
   nodedefinition   = "csr1000v"
 }  
 
-resource "ansible_host" "comServices" {
-    inventory_hostname = "comServices"
-    groups = ["services"]
-    vars = {
-        ansible_host = "192.168.202.131"
-        lo0          = "192.168.254.131"
-    }
-}
-
 resource "cml2_link" "fabric-comServices" {
   lab_id           = cml2_lab.AppPoDSim.id
   node_a           = cml2_node.fabric.id

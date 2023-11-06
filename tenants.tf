@@ -6,6 +6,7 @@ module "tenants" {
     source               = "./modules/services/tenants"
     prov                 = var.deployment.cloudprovider
     region               = var.deployment.region
+    az                   = var.deployment.availability_zone
     pod                  = module.pods.pod_id
     fabric               = module.pods.fabric_id
     oob                  = module.pods.oob_id
@@ -15,6 +16,7 @@ module "tenants" {
     status               = "Operational"
     comCust_secret       = var.comCust_secret
     comCust_agent        = var.comCust_agent
+    application          = var.application
     env_compartments     = var.compartments
     centercode           = var.deployment.centercode
     read                 = var.deployment.read

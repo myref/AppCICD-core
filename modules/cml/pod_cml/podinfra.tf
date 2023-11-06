@@ -7,15 +7,6 @@ resource "cml2_node" "comPodinfra" {
   nodedefinition = "csr1000v"
 }
 
-resource "ansible_host" "comPodinfra" {
-    inventory_hostname = "comPodinfra"
-    groups = ["podinfra"]
-    vars = {
-        ansible_host = "192.168.202.132"
-        lo0          = "192.168.254.132"
-    }
-}
-
 resource "cml2_link" "fabric-comPodinfra" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.fabric.id

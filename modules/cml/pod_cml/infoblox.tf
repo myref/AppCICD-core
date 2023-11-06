@@ -9,7 +9,7 @@ resource "cml2_node" "gridmaster" {
 
 resource "ansible_host" "Gridmaster" {
     inventory_hostname = "gridmaster"
-    groups = ["backend"]
+    groups = ["IPAM"]
     vars = {
         ansible_host = "192.168.205.50"
     }

@@ -7,15 +7,6 @@ resource "cml2_node" "comData" {
   nodedefinition = "csr1000v"
 }
 
-resource "ansible_host" "comData" {
-    inventory_hostname = "comData"
-    groups = ["data"]
-    vars = {
-        ansible_host = "192.168.202.135"
-        lo0          = "192.168.254.135"
-    }
-}
-
 resource "cml2_link" "fabric-comData" {
   lab_id         = cml2_lab.AppPoDSim.id
   node_a         = cml2_node.fabric.id

@@ -5,6 +5,7 @@ module "server_cml" {
     tenant               = var.tenant_id
     application          = var.application
     compartment          = var.compartment
+    compartment_name     = var.compartment_name
     name                 = var.name
     description          = var.description
     sstatus              = var.sstatus

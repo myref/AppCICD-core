@@ -37,6 +37,8 @@ variable "env_compartments" {
     type    = map
 }
 
+variable "application" {}
+
 variable "status" {
     type    = string
     default = "Operational"
@@ -46,6 +48,8 @@ variable "region" {
     type    = string
     default = "West"
 }
+
+variable "az" {}
 
 variable "centercode" {
     type    = string

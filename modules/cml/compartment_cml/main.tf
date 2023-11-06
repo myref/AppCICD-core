@@ -15,6 +15,27 @@ resource "cml2_link" "cust_tenant-compartment" {
   slot_b           = 0
 } 
 
+resource "ansible_group" "compartiment" {
+  inventory_group_name = var.name
+  children = var.children
+  vars = {
+    pod                  = var.pod
+    tenant_id            = var.tenant_id
+    vrf                  = var.vrf
+    application          = var.application
+    environment          = var.environment
+    name                 = var.name
+    description          = var.description
+    cstatus              = var.cstatus
+    ctype                = var.ctype
+    centercode           = var.centercode
+    write                = var.write
+    read                 = var.read
+    own                  = var.own
+    y                    = var.y
+  }
+}
+
 resource "cml2_lifecycle" "Compartment" {
   lab_id = var.pod
   elements = [

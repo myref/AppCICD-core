@@ -6,9 +6,12 @@ module "tenant_cml" {
     oob                  = var.oob
     name                 = var.name
     description          = var.description
+    region               = var.region
+    az                   = var.az
     comCust_secret       = var.comCust_secret
     comCust_agent        = var.comCust_agent
     env_compartments     = var.env_compartments
+    application          = var.application
     status               = var.status
     centercode           = var.centercode
     write                = var.write

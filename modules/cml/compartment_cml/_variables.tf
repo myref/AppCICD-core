@@ -34,6 +34,12 @@ variable "ctype" {
     type    = string
 }
 
+variable "compartments" {}
+
+variable "children" {}
+
+variable "servers" {}
+
 variable "centercode" {
     type    = string
 }
@@ -52,6 +58,10 @@ variable "own" {
 
 variable "y" {
     type    = number
+}
+
+variable "key" {
+    type    = string
 }
 
 variable "cml_url" {

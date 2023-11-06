@@ -10,7 +10,19 @@ variable "description" {
     type    = string
 }
 
-variable "apptenant" {
+variable "tenant" {
+    type    = string
+}
+
+variable "region" {
+    type    = string
+}
+
+variable "az" {
+    type    = string
+}
+
+variable "application" {
     type    = string
 }
 

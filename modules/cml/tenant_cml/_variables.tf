@@ -7,6 +7,10 @@ variable "pod" {
     type    = string
 }
 
+variable "region" {}
+
+variable "az" {}
+
 variable "fabric" {
     type    = string
 }
@@ -35,6 +39,8 @@ variable "comCust_agent" {
 variable "env_compartments" {
     type    = map
 }
+
+variable "application" {}
 
 variable "status" {
     type    = string

@@ -10,11 +10,15 @@ module "compartment_cml" {
     description          = var.description
     cstatus              = var.cstatus
     ctype                = var.ctype
+    servers              = var.servers
     centercode           = var.centercode
     write                = var.write
     read                 = var.read
     own                  = var.own
     y                    = var.y
+    key                  = var.key
+    children             = var.children
+    compartments         = var.compartments
     cml_url              = var.cml_url
     cml_username         = var.cml_username
     cml_password         = var.cml_password

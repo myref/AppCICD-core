@@ -20,6 +20,10 @@ variable "vrf" {
 
 variable "vnet" {}
 
+variable "servers" {}
+
+variable "children" {}
+
 variable "compartments" {}
 
 variable "application" {

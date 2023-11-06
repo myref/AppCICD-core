@@ -11,7 +11,7 @@ resource "cml2_node" "server" {
 
 resource "ansible_host" "custAcme" {
     inventory_hostname = "${var.name}"
-    groups = ["acme"]
+    groups = [var.compartment_name]
     vars = {
         ansible_host = "192.168.${var.c + 5}.${var.y + 2}"
     }

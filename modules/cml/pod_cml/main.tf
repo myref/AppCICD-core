@@ -1,14 +1,14 @@
 resource "cml2_lab" "AppPoDSim" {
-  title       = "${var.prov}-${var.region}-${var.name}"
+  title       = "${var.prov}_${replace(var.region," ","")}_${var.name}"
   description = "Virtual functionally equivalent lab to test application installation"
   notes       = "${var.description}"
 }
 
-resource "ansible_group" "deployment" {
-  inventory_group_name = "${var.prov}-${var.region}-${var.name}"
-  children = ["podinfra", "services", "data", "sysbeheer", "backend", "acme"]
-    vars = {
-      deployment_id = cml2_lab.AppPoDSim.id
+resource "ansible_group" "PoD" {
+  inventory_group_name = "${var.prov}_${replace(var.region," ","")}_${var.az}"
+  children = ["data","services","sysbeheer","podinfra",var.environment]
+  vars = {
+    pod_name = "${var.prov}_${replace(var.region," ","")}_${var.name}"
   }
 }
 

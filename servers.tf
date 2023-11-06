@@ -68,6 +68,7 @@ module "servers" {
     y                    = index(keys(var.servers), each.key)
     c                    = index(keys(var.compartments), each.value.compartment)
     compartment          = module.compartments[each.value.compartment].compartment_id
+    compartment_name     = module.compartments[each.value.compartment].compartment_name
 
     depends_on = [
     module.compartments

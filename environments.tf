@@ -23,6 +23,7 @@ module "environments" {
     region               = var.deployment.region
     az                   = var.deployment.availability_zone
     application          = "1"
+    children             = [1,2,3,4,5]
     eversion             = var.deployment.version
     estatus              = "Operational"
     centercode           = var.deployment.centercode

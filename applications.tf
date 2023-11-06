@@ -7,7 +7,10 @@ module "applications" {
     prov                 = var.deployment.cloudprovider
     name                 = var.tenant
     description          = var.networktenant
-    apptenant            = module.tenants.tenant_id
+    tenant               = module.tenants.tenant_id
+    region               = var.deployment.region
+    az                   = var.deployment.availability_zone
+    application          = var.application
     status               = "Operational"
     centercode           = var.deployment.centercode
     read                 = var.deployment.read

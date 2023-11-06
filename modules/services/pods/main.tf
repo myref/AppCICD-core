@@ -2,11 +2,15 @@ module "pod_cml" {
     source               = "../../cml/pod_cml"
     count                = var.prov == "CML" ? 1 : 0
     prov                 = var.prov
+    tenant               = var.tenant
     region               = var.region
+    az                   = var.az
     podType              = var.podType
     name                 = var.az
     description          = var.description
     status               = var.status
+    application          = var.application
+    environment          = var.environment
     centercode           = var.centercode
     write                = var.write
     read                 = var.read

@@ -19,9 +19,9 @@ variable "compartments" {
         cversion            = optional(string, "0.0.1"),
         cstatus             = optional(string, "Operational"),
         centercode          = optional(string, "123456789"),
-        read                = optional(string, "BIZA\\"),
-        write               = optional(string, "BIZA\\"),
-        own                 = optional(string, "BIZA\\")
+        read                = optional(string, "BIZ"),
+        write               = optional(string, "BIZ"),
+        own                 = optional(string, "BIZ")
         })            
     )
 }
@@ -37,6 +37,7 @@ module "compartments" {
     compartments         = var.compartments
     application          = var.application
     region               = var.deployment.region
+    servers              = var.servers
     cml_url              = var.cml_url
     cml_username         = var.cml_username
     cml_password         = var.cml_password
@@ -53,6 +54,7 @@ module "compartments" {
     own                  = each.value.own
     environment          = each.value.parentid
     y                    = index(keys(var.compartments), each.key)
+    children             = []
     ctype                = each.value.details.Type
     numOfServers         = each.value.details.Number_of_Servers
     addressing           = "IPv4"

@@ -20,6 +20,8 @@ variable "cloudprovider" {
 
 variable "compartments" {}
 
+variable "children" {}
+
 variable "region" {
     type    = string
 }

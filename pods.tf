@@ -5,6 +5,8 @@ module "pods" {
     podType              = "AP"
     az                   = var.deployment.availability_zone
     tenant               = var.tenant
+    application          = var.application
+    environment          = var.name
     centercode           = var.deployment.centercode
     read                 = var.deployment.read
     write                = var.deployment.write

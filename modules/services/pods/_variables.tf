@@ -10,6 +10,14 @@ variable "tenant" {
     type    = string
 }
 
+variable "application" {
+    type    = string
+}
+
+variable "environment" {
+    type    = string
+}
+
 variable "description" {
     type    = string
     default = ""

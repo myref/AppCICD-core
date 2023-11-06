@@ -8,6 +8,10 @@ variable "region" {
     default = "West"
 }
 
+variable "tenant" {
+    type    = string
+}
+
 variable "podType" {
     type    = string
     default = "AP"
@@ -16,6 +20,14 @@ variable "podType" {
 variable "az" {
     type    = string
     default = "AP01"
+}
+
+variable "application" {
+    type    = string
+}
+
+variable "environment" {
+    type    = string
 }
 
 variable "name" {

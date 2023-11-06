@@ -36,6 +36,10 @@ variable "compartment" {
     type    = string
 }
 
+variable "compartment_name" {
+    type    = string
+}
+
 variable "key" {
     type    = string
 }
