@@ -109,6 +109,14 @@ resource "azurerm_windows_virtual_machine" "com-svc-adds0" {
 
 }
 
+resource "ansible_host" "adds0" {
+    inventory_hostname = "adds0"
+    groups = ["AD"]
+    vars = {
+        ansible_host = "192.168.201.132"
+    }
+}
+
 resource "azurerm_windows_virtual_machine" "com-svc-adds1" {
   name                = "com-svc-adds1"
   resource_group_name = var.resource_group_name
@@ -135,4 +143,12 @@ resource "azurerm_windows_virtual_machine" "com-svc-adds1" {
     version   = "latest"
   }
 
+}
+
+resource "ansible_host" "adds1" {
+    inventory_hostname = "adds1"
+    groups = ["AD"]
+    vars = {
+        ansible_host = "192.168.201.133"
+    }
 }

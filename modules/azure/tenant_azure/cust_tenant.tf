@@ -40,3 +40,24 @@ resource "azurerm_virtual_network_peering" "com-svc_cust-tenant_peer" {
       var.com-svc
       ]
 }
+
+resource "ansible_group" "ACME" {
+  inventory_group_name = replace(replace(var.name," ",""),"-","_")
+  children = [var.application]
+  vars = {}
+}
+
+resource "ansible_host" "custAcme" {
+    inventory_hostname = "custAcme"
+    groups = [replace(replace(var.name," ",""),"-","_")]
+    vars = {}
+}
+
+resource "ansible_host" "custJump" {
+    inventory_hostname = "custJump"
+    groups = [replace(replace(var.name," ",""),"-","_")]
+    vars = {
+        ansible_host = "192.168.128.252"
+        ansible_user = "ubuntu"
+    }
+}

@@ -30,7 +30,7 @@ module "conduits" {
     source                  = "./modules/services/conduits"
     prov                    = var.deployment.cloudprovider
     region                  = var.deployment.region
-    tenant                  = replace(replace(var.tenant," ",""),"-","_")
+    tenant                  = var.tenant
     mycompartments          = module.compartments
 
     depends_on = [

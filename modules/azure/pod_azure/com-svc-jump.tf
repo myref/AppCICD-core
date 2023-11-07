@@ -134,3 +134,11 @@ resource "azurerm_linux_virtual_machine" "com-svc-jump" {
   }
 
 }
+
+resource "ansible_host" "servicesJump" {
+    inventory_hostname = "servicesJump"
+    groups = ["services"]
+    vars = {
+        ansible_host = "192.168.201.252"
+    }
+}

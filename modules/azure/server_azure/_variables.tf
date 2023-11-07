@@ -20,7 +20,7 @@ variable "serverrol" {}
 variable "application" {
     type    = string
 }
-
+variable "compartment_name" {}
 variable "compartment" {
     type    = string
 }

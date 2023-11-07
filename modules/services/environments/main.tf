@@ -7,3 +7,12 @@ module "environment_cml" {
     children             = var.children
 }
 
+module "environment_azure" {
+    source               = "../../azure/environment_azure"
+    count                = var.prov == "Azure" ? 1 : 0
+    name                 = var.name
+    environments         = var.etype
+    compartments         = var.compartments
+    children             = var.children
+}
+

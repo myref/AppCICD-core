@@ -29,6 +29,7 @@ module "server_azure" {
     tenant_subnet_id     = var.tenant_subnet_id
     application          = var.application
     compartment          = var.compartment
+    compartment_name     = var.compartment_name
     key                  = var.key
     name                 = var.name
     description          = var.description

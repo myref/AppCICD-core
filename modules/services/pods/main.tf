@@ -2,7 +2,7 @@ module "pod_cml" {
     source               = "../../cml/pod_cml"
     count                = var.prov == "CML" ? 1 : 0
     prov                 = var.prov
-    tenant               = var.tenant
+    tenant               = replace(replace(var.tenant," ",""),"-","_")
     region               = var.region
     az                   = var.az
     podType              = var.podType
@@ -25,6 +25,7 @@ module "pod_azure" {
     count                = var.prov == "Azure" ? 1 : 0
     prov                 = var.prov
     region               = var.region
+    environment          = var.environment
     name                 = var.az
     description          = var.description
     resource_group_name  = var.tenant

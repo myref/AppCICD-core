@@ -3,6 +3,8 @@ variable "prov" {
     default = "CML"
 }
 
+variable "application" {}
+
 variable "name" {
     type    = string
 }

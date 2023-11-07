@@ -30,6 +30,7 @@ module "tenant_azure" {
     resource_group_name  = var.name
     com-svc              = var.com-svc
     location             = var.region
+    application          = var.application
     env_compartments     = var.env_compartments
     status               = var.status
     centercode           = var.centercode

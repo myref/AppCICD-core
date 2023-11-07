@@ -6,9 +6,7 @@ variable "tenant" {
     type    = string
 }
 
-variable "vnet" {
-
-}
+variable "vnet" {}
 
 variable "application" {
     type    = string
@@ -19,6 +17,8 @@ variable "environment" {
 }
 
 variable compartments {}
+
+variable "children" {}
 
 variable "name" {
     type    = string

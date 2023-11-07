@@ -23,9 +23,9 @@ variable "servers" {
         cversion            = optional(string, "0.0.1"),
         cstatus             = optional(string, "Operational"),
         centercode          = optional(string, "123456789"),
-        read                = optional(string, "BIZA\\"),
-        write               = optional(string, "BIZA\\"),
-        own                 = optional(string, "BIZA\\"),
+        read                = optional(string, "BIZ"),
+        write               = optional(string, "BIZ"),
+        own                 = optional(string, "BIZ"),
         image               = optional(string, "Windows Server 2022"),
         sversion            = optional(string, "0.0.1"),
         sstatus             = optional(string, "Operational")
@@ -38,7 +38,7 @@ module "servers" {
     prov                 = var.deployment.cloudprovider
 
     pod                  = module.pods.pod_id
-    tenant               = replace(replace(var.tenant," ",""),"-","_")
+    tenant               = var.tenant
     tenant_id            = module.tenants.tenant_id
     application          = replace(replace(var.application," ",""),"-","_")
     region               = var.deployment.region

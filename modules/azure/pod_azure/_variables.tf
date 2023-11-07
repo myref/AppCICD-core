@@ -7,6 +7,8 @@ variable "region" {
     default = "Europe"
 }
 
+variable "environment" {}
+
 variable "az" {
     type    = string
     default = "West Europe"

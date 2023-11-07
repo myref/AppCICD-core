@@ -30,7 +30,7 @@ module "compartments" {
     source               = "./modules/services/compartments"
     prov                 = var.deployment.cloudprovider
     pod                  = module.pods.pod_id
-    tenant               = replace(replace(var.tenant," ",""),"-","_")
+    tenant               = var.tenant
     tenant_id            = module.tenants.tenant_id
     vrf                  = module.tenants.tenant_vrf
     vnet                 = module.tenants.tenant_vnet

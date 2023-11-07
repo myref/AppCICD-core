@@ -33,6 +33,7 @@ module "compartment_azure" {
     application          = var.application
     environment          = var.environment
     compartments         = var.compartments
+    children             = var.children
     key                  = var.key
     name                 = var.name
     description          = var.description
