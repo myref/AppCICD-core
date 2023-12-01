@@ -12,6 +12,10 @@ resource "ansible_host" "Gridmaster" {
     groups = ["IPAM"]
     vars = {
         ansible_host = "192.168.205.50"
+        lan1         = "192.168.205.50"
+        lan1_gw      = "192.168.205.49"
+        lan1_mask    = "255.255.255.248"
+        hwtype       = "IB-V1415"
     }
 }
 
@@ -37,9 +41,16 @@ resource "ansible_host" "GridmemberA" {
     groups = ["services"]
     vars = {
         ansible_host = "192.168.205.66"
-        mgmt = "192.168.205.66"
-        lan1 = "192.168.201.146"
-        lan2 = "192.168.205.137"
+        mgmt         = "192.168.205.66"
+        mgmt_gw      = "192.168.205.65"
+        mgmt_mask    = "255.255.255.248"
+        lan1         = "192.168.201.146"
+        lan1_gw      = "192.168.201.145"
+        lan1_mask    = "255.255.255.248"
+        lan2         = "192.168.205.137"
+        lan2_gw      = "192.168.205.136"
+        mgmt_mask    = "255.255.255.248"
+        hwtype       = "IB-V1415"
     }
 }
 
@@ -115,9 +126,16 @@ resource "ansible_host" "GridmemberB" {
     groups = ["services"]
     vars = {
         ansible_host = "192.168.205.67"
-        mgmt = "192.168.205.67"
-        lan1 = "192.168.201.147"
-        lan2 = "192.168.205.138"
+        mgmt         = "192.168.205.67"
+        mgmt_gw      = "192.168.205.65"
+        mgmt_mask    = "255.255.255.248"
+        lan1         = "192.168.201.147"
+        lan1_gw      = "192.168.201.145"
+        lan1_mask    = "255.255.255.248"
+        lan2         = "192.168.205.138"
+        lan2_gw      = "192.168.205.136"
+        mgmt_mask    = "255.255.255.248"
+        hwtype       = "IB-V1415"
     }
 }
 

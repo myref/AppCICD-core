@@ -56,6 +56,10 @@ variable "ram" {
     default = 4
 }
 
+variable "image" {}
+
+variable "size" {}
+
 variable "c" {
     type    = number
 }

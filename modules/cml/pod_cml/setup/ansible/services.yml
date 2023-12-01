@@ -1,0 +1,10 @@
+- name: Infoblox
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files: roles/infoblox/vars/main.yaml
+  tasks:
+    - name: Setup infoblox
+      ansible.builtin.import_role:
+        name: infoblox
+

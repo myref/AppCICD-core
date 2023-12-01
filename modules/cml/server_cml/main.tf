@@ -2,11 +2,11 @@ resource "cml2_node" "server" {
   lab_id           = var.pod
   label            = "${var.name}"
   cpus             = var.cpus
-  ram              = var.ram
+  ram              = var.ram * 1024
   x                = 1000
   y                = 225-(var.c)*75-(var.y)*50
   tags             = ["edge"]
-  nodedefinition   = "ubuntu"
+  nodedefinition   = strcontains(upper(var.image),"WINDOWS") ? "windows" : "ubuntu"
 }
 
 resource "ansible_host" "custAcme" {

@@ -6,6 +6,10 @@ module "server_cml" {
     application          = var.application
     compartment          = var.compartment
     compartment_name     = var.compartment_name
+    cpus                 = var.cpus
+    ram                  = var.ram
+    size                 = var.size
+    image                = var.image 
     name                 = var.name
     description          = var.description
     sstatus              = var.sstatus
@@ -30,6 +34,10 @@ module "server_azure" {
     application          = var.application
     compartment          = var.compartment
     compartment_name     = var.compartment_name
+    cpus                 = var.cpus
+    ram                  = var.ram
+    size                 = var.size
+    image                = var.image 
     key                  = var.key
     name                 = var.name
     description          = var.description

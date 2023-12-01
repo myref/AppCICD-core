@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation                                  This robotfile executes the commands on a vnios node to configure it as a gridmaster
 ...                                            usage:
-...                                            robot -v lab:'Infoblox_configurator' infoblox_gridmaster.robot 
+...                                            robot -v deployment:'Infoblox_configurator' infoblox_gridmaster.robot 
                         
 Library                                        SSHLibrary
                         
@@ -9,18 +9,10 @@ Suite Setup                                    Open Connection And Log In
 Suite Teardown                                 Close All Connections
 
 *** Variables ***
-${HOST}                                        %{TF_VAR_cml_host}
-${USERNAME}                                    %{TF_VAR_cml_username}
-${PASSWORD}                                    %{TF_VAR_cml_password}
+${HOST}                                        ${TF_VAR_cml_host}
+${USERNAME}                                    ${TF_VAR_cml_username}
+${PASSWORD}                                    ${TF_VAR_cml_password}
 ${ib_node}                                     Gridmaster
-${ib_user}                                     %{ib_user}
-${ib_pwd}                                      %{ib_pwd}
-${ib_lan1_addr}                                192.168.32.50
-${ib_lan1_mask}                                255.255.255.0
-${ib_lan1_gw}                                  192.168.32.2
-${ib_gm_vip}                                   192.168.32.49
-${ib_gm_grid}                                  %{ib_grid}
-${ib_gm_secret}                                %{ib_grid_secret}
 
 *** Test Cases ***
 Set interfaces
@@ -33,15 +25,13 @@ Set licenses
     Infoblox login
     Set dns license
     Infoblox login
-    Set dhcp license
-    Infoblox login
     Set grid license
 
 *** Keywords ***
 Open Connection And Log In
    Open Connection                 ${HOST}
    Login                           ${USERNAME}         ${PASSWORD}
-   Write                           open /${lab}/${ib_node}/0
+   Write                           open /${deployment}/${ib_node}/0
    Infoblox_login
 
 Infoblox login
@@ -278,11 +268,11 @@ Configure LAN1 interface And Verify Return Code
     ...
     Write                          set network
     Read Until                     Enter IP address:
-    Write                          ${ib_lan1_addr}
+    Write                          ${gm_lan1_addr}
     Read Until                     Enter netmask [Default: 
-    Write                          ${ib_lan1_mask}
+    Write                          ${gm_lan1_mask}
     Read Until                     Enter gateway address [Default: 
-    Write                          ${ib_lan1_gw}
+    Write                          ${gm_lan1_gw}
     Read Until                     Enter VLAN tag [Default: 
     Write                          Untagged
     Read Until                     Configure IPv6 network settings? (y or n):

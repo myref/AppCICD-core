@@ -80,3 +80,17 @@ variable "resource_group_name" {
 }
 
 variable "com-svc" {}
+
+variable "cpus" {
+    type    = number
+    default = 2
+}
+
+variable "ram" {
+    type    = number
+    default = 4
+}
+
+variable "image" {}
+
+variable "size" {}

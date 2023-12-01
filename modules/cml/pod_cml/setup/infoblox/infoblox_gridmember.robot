@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation                                      This robotfile executes the commands on a vnios node to configure it as a gridmember
 ...                                                usage:
-...                                                robot -v lab:'CML-West Europe-ap01' -v MEMBER:'A' infoblox_gridmember.robot 
-...                                                robot -v lab:'CML-West Europe-ap01' -v MEMBER:'B' -v ib_lan1_addr:'192.168.201.147' -v ib_mgmt_addr:'192.168.205.67' infoblox_gridmember.robot 
+...                                                robot -v lab:'CML-WestEurope-ap01' -v MEMBER:'A' infoblox_gridmember.robot 
+...                                                robot -v lab:'CML-WestEurope-ap01' -v MEMBER:'B' -v ib_lan1_addr:'192.168.201.147' -v ib_mgmt_addr:'192.168.205.67' infoblox_gridmember.robot 
                             
 Library                                            SSHLibrary
                             
@@ -36,6 +36,10 @@ Set licenses
     Set grid license
     Infoblox login
     Set NIOS license
+    Infoblox login
+    Set dns license
+    Infoblox login
+    Set dhcp license
 
 Add node to grid
     Infoblox login
@@ -102,6 +106,106 @@ Set nios license
     Read until                                     Are you sure you want to do this? (y or n):
     Write                                          y
     Read Until                                     Disconnect NOW if you have not been expressly authorized to use this system.
+
+Set dns license
+    [Documentation]                Configure temporary dns license
+    ...                            The keyword returns the standard output by default. Flow:
+    ...                            Infoblox > set temp_license 
+    ...                            
+    ...                              1. DNSone (DNS, DHCP)
+    ...                              2. DNSone with Grid (DNS, DHCP, Grid)
+    ...                              3. Network Services for Voice (DHCP, Grid)
+    ...                              4. Add NIOS License
+    ...                              5. Add DNS Server license
+    ...                              6. Add DHCP Server license
+    ...                              7. Add Grid license
+    ...                              8. Add Microsoft management license
+    ...                              9. Add Multi-Grid Management license
+    ...                             10. Add Query Redirection license
+    ...                             11. Add Response Policy Zones license
+    ...                             12. Add FireEye license
+    ...                             13. Add DNS Traffic Control license
+    ...                             14. Add Cloud Network Automation license
+    ...                             15. Add Security Ecosystem license
+    ...                             16. Add Threat Analytics license
+    ...                             17. Add Flex Grid Activation license
+    ...                             18. Add Flex Grid Activation for Managed Services license
+    ...                            
+    ...                            Select license (1-18) or q to quit: 7
+    ...                            
+    ...                            This action will generate a temporary 60-day Add Grid license.
+    ...                            Are you sure you want to do this? (y or n): y
+    ...                            Grid temporary license installed.
+    ...                            
+    ...                            Temporary license is installed.
+    ...                            
+    ...                            
+    ...                            The UI needs to be restarted in order to reflect license changes.
+    ...                            Restart UI now, this will log out all UI users? (y or n):y
+    ...                
+    ...                            Are you sure you want to do this? (y or n): y
+    ...                            UI restarted.
+    ...    
+    Write                          set temp_license
+    Read Until                     Select license
+    Write                          5
+    Read until                     Are you sure you want to do this? (y or n):
+    Write                          y
+    Read until                     Restart UI now, this will log out all UI users? (y or n):
+    Write                          y
+    Read until                     Are you sure you want to do this? (y or n):
+    Write                          y
+    Write                          exit
+
+Set dhcp license
+    [Documentation]                Configure temporary dhcp license
+    ...                            The keyword returns the standard output by default. Flow:
+    ...                            Infoblox > set temp_license 
+    ...                            
+    ...                              1. DNSone (DNS, DHCP)
+    ...                              2. DNSone with Grid (DNS, DHCP, Grid)
+    ...                              3. Network Services for Voice (DHCP, Grid)
+    ...                              4. Add NIOS License
+    ...                              5. Add DNS Server license
+    ...                              6. Add DHCP Server license
+    ...                              7. Add Grid license
+    ...                              8. Add Microsoft management license
+    ...                              9. Add Multi-Grid Management license
+    ...                             10. Add Query Redirection license
+    ...                             11. Add Response Policy Zones license
+    ...                             12. Add FireEye license
+    ...                             13. Add DNS Traffic Control license
+    ...                             14. Add Cloud Network Automation license
+    ...                             15. Add Security Ecosystem license
+    ...                             16. Add Threat Analytics license
+    ...                             17. Add Flex Grid Activation license
+    ...                             18. Add Flex Grid Activation for Managed Services license
+    ...                            
+    ...                            Select license (1-18) or q to quit: 7
+    ...                            
+    ...                            This action will generate a temporary 60-day Add Grid license.
+    ...                            Are you sure you want to do this? (y or n): y
+    ...                            Grid temporary license installed.
+    ...                            
+    ...                            Temporary license is installed.
+    ...                            
+    ...                            
+    ...                            The UI needs to be restarted in order to reflect license changes.
+    ...                            Restart UI now, this will log out all UI users? (y or n):y
+    ...                            
+    ...                            Are you sure you want to do this? (y or n): y
+    ...                            UI restarted.
+    ...    
+    Write                          set temp_license
+    Read Until                     Select license
+    Write                          6
+    Read until                     Are you sure you want to do this? (y or n):
+    Write                          y
+    Read until                     Restart UI now, this will log out all UI users? (y or n):
+    Write                          y
+    Read until                     Are you sure you want to do this? (y or n):
+    Write                          y
+    Write                          exit
 
 Set grid license
     [Documentation]                                Configure temporary grid license

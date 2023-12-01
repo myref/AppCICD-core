@@ -1,0 +1,23 @@
+---
+gridmaster:
+  LAN1:
+    fqdn: gridmaster.localdomain
+    gm_lan1_addr: 192.168.205.50
+    gm_lan1_mask: 255.255.255.248
+    gm_lan1_gw: 192.168.205.49
+  grid:
+    grid_name: cml.lab
+    grid_secret: "!IBvpn01"
+
+memberA:
+ - { name: memberA.localdomain, mgmt_ip_address: 192.168.205.66, mgmt_netmask: 255.255.255.248, mgmt_gateway: 192.168.205.65, lan1_ip_address: 192.168.201.146, lan1_netmask: 255.255.255.248, lan1_gateway: 192.168.201.145 }
+  
+memberB:
+ - { name: memberB.localdomain, mgmt_ip_address: 192.168.205.67, mgmt_netmask: 255.255.255.248, mgmt_gateway: 192.168.205.65, lan1_ip_address: 192.168.201.147, lan1_netmask: 255.255.255.248, lan1_gateway: 192.168.201.145 }
+
+static_routes:
+ - { name: gridmaster, target_network: 192.168.205.48, mask: 255.255.255.248, gateway: 192.168.205.65}
+
+member_static_routes: []
+
+...
