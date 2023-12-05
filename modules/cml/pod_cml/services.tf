@@ -90,7 +90,7 @@ resource "cml2_node" "servicesBr" {
   y                = -250
   tags             = ["services"]
   nodedefinition   = "external_connector"
-  configuration    = "System Bridge"
+  configuration    = "NAT"
 }
 
 resource "cml2_link" "servicesGw-nat" {
