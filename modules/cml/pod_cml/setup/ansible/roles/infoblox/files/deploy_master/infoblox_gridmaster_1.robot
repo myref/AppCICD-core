@@ -47,10 +47,10 @@ ${DELAY}                                               0
 ${ib_node}                                             Gridmaster
 ${ib_user}                                             %{ib_user}
 ${ib_pwd}                                              %{ib_pwd}
-${ib_lan1_addr}                                        192.168.32.50
+${ib_lan1_addr}                                        192.168.205.50
 ${ib_lan1_mask}                                        255.255.255.0
-${ib_lan1_gw}                                          192.168.32.49
-${ib_gm_vip}                                           192.168.32.50
+${ib_lan1_gw}                                          192.168.205.49
+${ib_gm_vip}                                           192.168.205.50
 ${ib_gm_grid}                                          cml.lab
 ${ib_gm_secret}                                        %{ib_grid_secret}
 ${ib_host_name}                                        %{ib_host_name}
