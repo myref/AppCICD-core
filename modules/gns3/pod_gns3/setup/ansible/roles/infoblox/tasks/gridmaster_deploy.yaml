@@ -1,0 +1,110 @@
+---
+# First we need to intialize Infoblox Gridmaster from stock setup, i.e. give it IP addresses and temporary licenses
+- name: Initialize Gridmaster through robot
+  local_action: >
+    shell robot 
+    -v TF_VAR_GNS3_host:'{{ TF_VAR_GNS3_host }}'
+    -v TF_VAR_GNS3_username:'{{ TF_VAR_GNS3_username }}'
+    -v TF_VAR_GNS3_password:'{{ TF_VAR_GNS3_password }}'
+    -v deployment:'{{deployment}}'
+    -v ib_user:'{{ ib_user }}'
+    -v ib_pwd:'{{ ib_pwd }}'
+    -v gm_lan1_addr:'{{ gridmaster.LAN1.gm_lan1_addr }}'
+    -v gm_lan1_mask:'{{ gridmaster.LAN1.gm_lan1_mask }}'
+    -v gm_lan1_gw:'{{ gridmaster.LAN1.gm_lan1_gw }}'
+    infoblox_gridmaster_0.robot
+  args:
+    chdir: roles/infoblox/files/deploy_master/
+  register: infoblox_master_0_output
+  
+- name: Print results
+  debug: 
+    var: infoblox_master_0_output.stdout_lines
+  failed_when: "'Failed' in infoblox_master_0_output.stdout"
+
+# Next step is to accept the EULA, opt opt of data collection, and configure the grid
+- name: Configure Gridmaster through robot
+  local_action: shell robot -v lab:{{deployment}} infoblox_gridmaster_1.robot
+  args:
+    chdir: roles/infoblox/files/deploy_master/
+  register: infoblox_master_1_output
+  
+- name: Print results
+  debug: 
+    var: infoblox_master_1_output.stdout_lines
+  failed_when: "'Failed' in infoblox_master_1_output.stdout"
+
+# Grid is configured, now prepare for member addition
+
+# Router template is used to easily set default router addresses in every subnet
+
+# - name: Check if router template is present
+#   ansible.builtin.uri:
+#     url: "https://{{ infoblox_ip }}/wapi/v2.10/rangetemplate" <== check this
+#     user: "{{ infoblox_username }}"
+#     password: "{{ infoblox_password }}"
+#     method: GET
+#     status_code: 200
+#     validate_certs: false
+#     use_proxy: false
+#   register: check_router_template
+#   check_mode: false
+
+# - name: Configure router templates
+#   ansible.builtin.uri:
+#     url: "https://{{ infoblox_ip }}/wapi/v2.10/rangetemplate" <== check this
+#     user: "{{ infoblox_username }}"
+#     password: "{{ infoblox_password }}"
+#     method: POST
+#     status_code: 201
+#     body: "{{ lookup('ansible.builtin.template', './' + item + '.j2') }}" <== check this
+#     body_format: json
+#     validate_certs: false
+#     use_proxy: false
+#   when: item not in check_router_templates.json | map(attribute='name') <== check this
+#   register: configure_router_templates
+#   changed_when: configure_router_templates.status == 201
+#   failed_when: (configure_router_templates.status != 201) and (configure_router_templates.status != 400)
+#   loop:
+#     - DRT_ACI_{{ pod_name_for_templates }}_24 <== check this
+
+# # Fixed address template is used to reserve addresses conform the deployment guidelines in every subnet
+
+# - name: Check if fixed address template is present
+#   ansible.builtin.uri:
+#     url: "https://{{ infoblox_ip }}/wapi/v2.10/rangetemplate" <== check this
+#     user: "{{ infoblox_username }}"
+#     password: "{{ infoblox_password }}"
+#     method: GET
+#     status_code: 200
+#     validate_certs: false
+#     use_proxy: false
+#   register: check_fixed_address_template
+#   check_mode: false
+
+# - name: Configure fixed address templates
+#   ansible.builtin.uri:
+#     url: "https://{{ infoblox_ip }}/wapi/v2.10/rangetemplate" <== check this
+#     user: "{{ infoblox_username }}"
+#     password: "{{ infoblox_password }}"
+#     method: POST
+#     status_code: 201
+#     body: "{{ lookup('ansible.builtin.template', './' + item + '.j2') }}" <== check this
+#     body_format: json
+#     validate_certs: false
+#     use_proxy: false
+#   when: item not in check_fixed_address_templates.json | map(attribute='name') <== check this
+#   register: configure_fixed_address_templates
+#   changed_when: configure_fixed_address_templates.status == 201
+#   failed_when: (configure_fixed_address_templates.status != 201) and (configure_fixed_address_templates.status != 400)
+#   loop:
+#     - DRT_ACI_{{ pod_name_for_templates }}_24 <== check this
+
+
+
+
+# - name: Build a list of all the required static routes for the member.
+#   set_fact:
+#     member_static_routes: "{{ member_static_routes }} + [ '{{ item.static_route }}' ]"
+#   with_items: "{{ static_route }}"
+...

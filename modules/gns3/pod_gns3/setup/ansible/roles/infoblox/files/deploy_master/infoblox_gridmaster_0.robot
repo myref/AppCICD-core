@@ -9,9 +9,9 @@ Suite Setup                                    Open Connection And Log In
 Suite Teardown                                 Close All Connections
 
 *** Variables ***
-${HOST}                                        ${TF_VAR_cml_host}
-${USERNAME}                                    ${TF_VAR_cml_username}
-${PASSWORD}                                    ${TF_VAR_cml_password}
+${HOST}                                        ${TF_VAR_GNS3_host}
+${USERNAME}                                    ${TF_VAR_GNS3_username}
+${PASSWORD}                                    ${TF_VAR_GNS3_password}
 ${ib_node}                                     Gridmaster
 
 *** Test Cases ***
@@ -29,12 +29,11 @@ Set licenses
 
 *** Keywords ***
 Open Connection And Log In
-   Open Connection                 ${HOST}
-   Login                           ${USERNAME}         ${PASSWORD}
-   Write                           open /${deployment}/${ib_node}/0
+   Open Connection                 ${HOST}             port=5012
    Infoblox_login
 
 Infoblox login
+   Set Newline                     \n
    Write Until Expected Output     \n                  expected=login:     timeout=5 min 	retry_interval=0.5s
    Write                           ${ib_user}
    ${stdout}= 	                   Read Until          Local password:

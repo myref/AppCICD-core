@@ -1,0 +1,153 @@
+# Pre-check playbook for Infoblox Gridmaster roll-out
+#
+# Precondition: Stock Infoblox appliance is running
+#
+# Validates are defined as environment vars in .envrc, which is loaded though direnv when entering the directory. In the precheck these are defined as Ansible internal facts.
+#
+#        	Variable                Type	 	 Source         Required_when
+# @param 	TF_VAR_GNS3_username     string   .envrc         CML deployment
+# @param 	TF_VAR_GNS3_password     string   .envrc         CML deployment
+# @param 	TF_VAR_GNS3_host         string   .envrc         CML deployment
+# @param 	TF_VAR_GNS3_url          string   .envrc         CML deployment
+# @param 	PGUSER                  string   .envrc         Always
+#                                                         Required per team/application, as this is the scope boundary for Terraform state access.
+#                                                         Each application gets it's own database
+# @param 	PGPASSWORD              string   .envrc
+# @param 	ib_user                 string   .envrc         Stock Infoblox username for initial configuration
+# @param 	ib_pwd                  string   .envrc
+# @param 	ib_grid                 string   .envrc         Name required 
+# @param 	ib_grid_secret          string   .envrc
+# @param 	gm_host_name            string   .envrc         FQDN for the gridmaster. Will not work without
+# @param 	gm_lan1_addr            string   .envrc         LAN1 for the gridmaster. Will not work without
+# @param 	gm_lan1_mask            string   .envrc         
+# @param 	gm_lan1_gw              string   .envrc         
+# @param 	deployment              string   command line   Environment of the application
+#                                                         This is the Terraform workspace name in order to keep Terraform state with the environment
+#                                                         Name is used to name the CML lab, there will be one lab per deployment
+#
+#
+#        	 Variable               Type	 	 When           Why
+# @throws  TF_VAR_GNS3_username	  error    
+# @throws	 TF_VAR_GNS3_password    error    
+# @throws	 TF_VAR_GNS3_host        error    
+# @throws	 TF_VAR_GNS3_url         error    
+# @throws	 PGUSER                 error    undefined
+# @throws	 PGPASSWORD             error    undefined
+# @throws	 ib_user                error    undefined
+# @throws	 ib_pwd                 error    undefined
+# @throws	 ib_grid                error    undefined
+# @throws  ib_grid_secret         error    undefined
+# @throws  gm_host_name           error    undefined
+# @param 	gm_lan1_addr            string   undefined      Primary interface
+# @param 	gm_lan1_mask            string   undefined         
+# @param 	gm_lan1_gw              string   undefined         
+# @throws  deployment             error    undefined      Deployment is the application environment the device is running in
+#                                                         in the case of CML, it is the lab name and this var is needed to be able to configure the IP addresses on the console
+#                                                         in the case of of a physical appliance, this check may be skipped
+#                                                         in the case of CML, it is the lab name
+
+# ansible-playbook -i <which_inventory> infoblox.yaml
+- name: Check if the TF_VAR_GNS3_username variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'TF_VAR_GNS3_username') }}' != ''"
+  register: env_TF_VAR_GNS3_username_check
+
+- name: Define TF_VAR_GNS3_username as internal variable
+  set_fact:
+    TF_VAR_GNS3_username: "{{lookup('env', 'TF_VAR_GNS3_username')}}"
+  when: env_TF_VAR_GNS3_username_check.failed is false
+
+- name: Check if the TF_VAR_GNS3_password variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'TF_VAR_GNS3_password') }}' != ''"
+  register: TF_VAR_GNS3_password_check
+
+- name: Define TF_VAR_GNS3_password as internal variable
+  set_fact:
+    TF_VAR_GNS3_password: "{{lookup('env', 'TF_VAR_GNS3_password')}}"
+  when: TF_VAR_GNS3_password_check.failed is false
+
+- name: Check if the TF_VAR_GNS3_host variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'TF_VAR_GNS3_host') }}' != ''"
+  register: TF_VAR_GNS3_host_check
+
+- name: Define TF_VAR_GNS3_host as internal variable
+  set_fact:
+    TF_VAR_GNS3_host: "{{lookup('env', 'TF_VAR_GNS3_host')}}"
+  when: TF_VAR_GNS3_host_check.failed is false
+
+- name: Check if the TF_VAR_GNS3_url variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'TF_VAR_GNS3_url') }}' != ''"
+  register: TF_VAR_GNS3_url_check
+
+- name: Define TF_VAR_GNS3_url as internal variable
+  set_fact:
+    TF_VAR_GNS3_url: "{{lookup('env', 'TF_VAR_GNS3_url')}}"
+  when: TF_VAR_GNS3_url_check.failed is false
+
+- name: Check if the PGUSER variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'PGUSER') }}' != ''"
+  register: PGUSER_check
+
+- name: Define PGUSER as internal variable
+  set_fact:
+    PGUSER: "{{lookup('env', 'PGUSER')}}"
+  when: PGUSER_check.failed is false
+
+- name: Check if the PGPASSWORD variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'PGPASSWORD') }}' != ''"
+  register: PGPASSWORD_check
+
+- name: Define PGPASSWORD as internal variable
+  set_fact:
+    PGPASSWORD: "{{lookup('env', 'PGPASSWORD')}}"
+  when: PGPASSWORD_check.failed is false
+
+- name: Check if the ib_user variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'ib_user') }}' != ''"
+  register: ib_user_check
+
+- name: Define ib_user as internal variable
+  set_fact:
+    ib_user: "{{lookup('env', 'ib_user')}}"
+  when: ib_user_check.failed is false
+
+- name: Check if the ib_pwd variable exists and is not empty
+  assert:
+    that:
+      - "'{{ lookup('env', 'ib_pwd') }}' != ''"
+  register: ib_pwd_check
+
+- name: Define ib_pwd as internal variable
+  set_fact:
+    ib_pwd: "{{lookup('env', 'ib_pwd')}}"
+  when: ib_pwd_check.failed is false
+
+- name: Check if the ib_grid variable exists and is not empty
+  assert:
+    that:
+      - "'{{ gridmaster.grid.grid_name }}' != ''"
+
+- name: Check if the ib_grid_secret variable exists and is not empty
+  assert:
+    that:
+      - "'{{ gridmaster.grid.grid_secret }}' != ''"
+
+- name: Check if the ib_host_name variable exists and is not empty
+  assert:
+    that:
+      - "'{{ gridmaster.LAN1.fqdn }}' != ''"
+
+# Now we can use all variables natively inside Ansible.

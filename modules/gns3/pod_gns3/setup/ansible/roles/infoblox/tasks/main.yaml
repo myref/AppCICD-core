@@ -1,0 +1,8 @@
+---
+- name: Run pre-checks
+  ansible.builtin.include_tasks: gridmaster_prechecks.yaml
+
+- name: Deploy Gridmaster
+  ansible.builtin.include_tasks: gridmaster_deploy.yaml
+
+...
